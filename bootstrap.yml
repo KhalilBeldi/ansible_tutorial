@@ -1,0 +1,36 @@
+---
+
+- hosts: all
+  become: true
+  tasks:
+
+  - name: install updates
+    tags: always
+    apt:
+     upgrade: dist
+     update_cache: yes
+    when: ansible_distribution == "Ubuntu"
+  
+
+  - name: create arondor user to provison client server
+    tags: always
+    user:
+      name: arondor_user
+      groups: root
+
+
+  - name: add ssh key for arondor_user
+    tags: always
+    authorized_key:
+      user: arondor_user
+      key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIA1hGjjsx2Y+2Cm1Y8s33nxL6bbqjLZyd9K2vgWLqPyx ansible"
+
+
+  - name: add sudoers file for arondor_user
+    tags: always
+    copy:
+      src: sudoer_arondor
+      dest: /etc/sudoers.d/arondor_user
+      owner: root
+      mode: 0440
+

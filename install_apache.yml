@@ -23,6 +23,14 @@
       update_cache: yes
     when: ansible_distribution == "Ubuntu"
 
+  - name: start apache service for web server
+    service:
+      name: apache2
+      state: started
+      enabled: yes
+    when: ansible_distribution == "Ubuntu"
+
+
   - name: copy default html file for site
     copy:
       src: default_site.html
@@ -40,3 +48,18 @@
       name: mariadb-server
       state: latest
     when: ansible_distribution == "Ubuntu"
+
+
+
+- hosts: all
+  become: true
+  tasks:
+
+
+  - name: add ssh key for arondor_user
+    tags: always
+    authorized_key:
+      user: arondor_user
+      key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIA1hGjjsx2Y+2Cm1Y8s33nxL6bbqjLZyd9K2vgWLqPyx ansible"
+
+
