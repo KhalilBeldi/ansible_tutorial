@@ -1,0 +1,5 @@
+  - name: add ssh key for arondor_user
+    tags: always
+    authorized_key:
+      user: arondor_user
+      key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIA1hGjjsx2Y+2Cm1Y8s33nxL6bbqjLZyd9K2vgWLqPyx ansible"
